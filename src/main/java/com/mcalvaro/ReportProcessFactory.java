@@ -1,5 +1,11 @@
 package com.mcalvaro;
 
+import java.util.List;
+
+import com.mcalvaro.decorator.CompressionDecorator;
+import com.mcalvaro.decorator.EncryptionDecorator;
+import com.mcalvaro.decorator.HeaderDecorator;
+import com.mcalvaro.decorator.WatermarkDecorator;
 import com.mcalvaro.delivery.ApiDelivery;
 import com.mcalvaro.delivery.EmailDelivery;
 import com.mcalvaro.delivery.SharedFolderDelivery;
@@ -17,18 +23,18 @@ public class ReportProcessFactory {
             case EXECUTIVE -> new ExecutiveReportProcess(
                     new BasicProcessor(),
                     new PdfReportCreator(),
-                    new EmailDelivery()
-            );
+                    new EmailDelivery(),
+                    List.of(HeaderDecorator::new));
             case AUDITOR -> new AuditorReportProcess(
                     new EncryptProcessor(),
                     new ExcelReportCreator(),
-                    new SharedFolderDelivery()
-            );
+                    new SharedFolderDelivery(),
+                    List.of(WatermarkDecorator::new, EncryptionDecorator::new));
             case ANALYST -> new AnalystReportProcess(
                     new DetailedProcessor(),
                     new CsvReportCreator(),
-                    new ApiDelivery()
-            );
+                    new ApiDelivery(),
+                    List.of(HeaderDecorator::new, CompressionDecorator::new));
         };
     }
 }

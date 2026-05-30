@@ -1,7 +1,8 @@
 package com.mcalvaro;
 
-import com.mcalvaro.decorator.CompressionDecorator;
-import com.mcalvaro.decorator.HeaderDecorator;
+import java.util.List;
+import java.util.function.Function;
+
 import com.mcalvaro.delivery.Deliverable;
 import com.mcalvaro.processor.Processor;
 import com.mcalvaro.report.Report;
@@ -12,11 +13,14 @@ public class AnalystReportProcess implements ReportProcess {
     private final Processor processor;
     private final ReportFactory reportFactory;
     private final Deliverable delivery;
+    private final List<Function<Report, Report>> decorators;
 
-    public AnalystReportProcess(Processor processor, ReportFactory reportFactory, Deliverable delivery) {
+    public AnalystReportProcess(Processor processor, ReportFactory reportFactory, Deliverable delivery,
+                                List<Function<Report, Report>> decorators) {
         this.processor = processor;
         this.reportFactory = reportFactory;
         this.delivery = delivery;
+        this.decorators = decorators;
     }
 
     @Override
@@ -24,8 +28,9 @@ public class AnalystReportProcess implements ReportProcess {
         String data = processor.process(rawData);
         Report report = reportFactory.createReport(data);
 
-        report = new HeaderDecorator(report);
-        report = new CompressionDecorator(report);
+        for (var decorator : decorators) {
+            report = decorator.apply(report);
+        }
 
         delivery.deliver(report);
     }
