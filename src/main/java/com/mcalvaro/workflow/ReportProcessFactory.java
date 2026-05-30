@@ -1,4 +1,4 @@
-package com.mcalvaro;
+package com.mcalvaro.workflow;
 
 import java.util.List;
 
