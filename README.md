@@ -49,9 +49,11 @@ Este proyecto es una aplicación Java gestionada con Maven. Requiere **JDK 21** 
 mvn clean compile
 ```
 
-### Ejecutar la demostración:
+### Ejecutar la demostración interactiva:
 
-El archivo `Main.java` contiene una simulación de los flujos para Ejecutivo, Auditor y Analista usando un JSON de prueba. Para ejecutarlo:
+El archivo `Main.java` inicia un menú interactivo en consola. Este menú permite ejecutar los tres flujos predefinidos (Ejecutivo, Auditor y Analista) basados en un JSON de prueba, y adicionalmente ofrece un **Modo Custom** para armar el pipeline de reportes custom.
+
+Para ejecutar la aplicación interactiva:
 
 ```bash
 mvn exec:java -Dexec.mainClass="com.mcalvaro.Main"
@@ -62,4 +64,3 @@ mvn exec:java -Dexec.mainClass="com.mcalvaro.Main"
 ```bash
 mvn clean package
 ```
-
