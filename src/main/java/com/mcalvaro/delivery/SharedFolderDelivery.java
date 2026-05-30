@@ -1,5 +1,7 @@
 package com.mcalvaro.delivery;
 
+import java.util.HexFormat;
+
 import com.mcalvaro.report.Report;
 
 public class SharedFolderDelivery implements Deliverable {
@@ -9,7 +11,7 @@ public class SharedFolderDelivery implements Deliverable {
 
         System.out.println("Delivering to shared folder - filename: " + report.getFileName() + ", mime type: "
                 + report.getMimeType() +
-                ", content: " + report.getContent());
+                ", content: " + HexFormat.of().formatHex(report.getContent()));
     }
 
 }
