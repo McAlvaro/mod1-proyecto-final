@@ -8,7 +8,7 @@ import com.mcalvaro.processor.Processor;
 import com.mcalvaro.report.Report;
 import com.mcalvaro.report.ReportFactory;
 
-public class AuditorReportProcess implements ReportProcess {
+public class AuditorReportProcess extends BaseReportProcess {
 
     private final Processor processor;
     private final ReportFactory reportFactory;
@@ -24,16 +24,22 @@ public class AuditorReportProcess implements ReportProcess {
     }
 
     @Override
-    public void execute(String rawData) {
-        String data = processor.process(rawData);
-        Report report = reportFactory.createReport(data);
-
-        for (var decorator : decorators) {
-            report = decorator.apply(report);
-        }
-
-        delivery.deliver(report);
-
+    protected Processor getProcessor() {
+        return processor;
     }
 
+    @Override
+    protected ReportFactory getReportFactory() {
+        return reportFactory;
+    }
+
+    @Override
+    protected List<Function<Report, Report>> getDecorators() {
+        return decorators;
+    }
+
+    @Override
+    protected Deliverable getDeliverable() {
+        return delivery;
+    }
 }
