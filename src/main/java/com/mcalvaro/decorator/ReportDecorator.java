@@ -2,7 +2,7 @@ package com.mcalvaro.decorator;
 
 import com.mcalvaro.report.Report;
 
-public class ReportDecorator implements Report {
+public abstract class ReportDecorator implements Report {
 
     protected Report report;
 

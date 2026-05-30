@@ -2,9 +2,15 @@ package com.mcalvaro.report;
 
 public class ExcelReport implements Report {
 
+    private final byte[] content;
+
+    public ExcelReport(byte[] content) {
+        this.content = content;
+    }
+
     @Override
     public byte[] getContent() {
-        return new byte[0];
+        return content;
     }
 
     @Override

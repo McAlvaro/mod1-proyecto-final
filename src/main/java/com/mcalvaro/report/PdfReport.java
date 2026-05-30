@@ -2,9 +2,15 @@ package com.mcalvaro.report;
 
 public class PdfReport implements Report {
 
+    private final byte[] content;
+
+    public PdfReport(byte[] content) {
+        this.content = content;
+    }
+
     @Override
     public byte[] getContent() {
-        return new byte[0];
+        return content;
     }
 
     @Override
